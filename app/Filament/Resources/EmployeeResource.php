@@ -37,9 +37,10 @@ class EmployeeResource extends Resource
                         Forms\Components\TextInput::make('middle_name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('department_id')
-                            ->required()
-                            ->numeric(),
+                        Forms\Components\Select::make('department_id')
+                            ->relationship('department', 'name')
+                            ->preload()
+                            ->required(),
                         Forms\Components\DatePicker::make('date_of_birth')
                             ->required(),
                         Forms\Components\DatePicker::make('date_of_hired')
@@ -47,15 +48,18 @@ class EmployeeResource extends Resource
                     ])
                     ->columns(2),
                 Forms\Components\Section::make('Employee Adress')->schema([
-                    Forms\Components\TextInput::make('country_id')
+                    Forms\Components\Select::make('country_id')
+                        ->relationship('country', 'name')
+                        ->preload()
+                        ->required(),
+                    Forms\Components\Select::make('state_id')
                         ->required()
-                        ->numeric(),
-                    Forms\Components\TextInput::make('state_id')
+                        ->relationship('state', 'name')
+                        ->preload(),
+                    Forms\Components\Select::make('city_id')
                         ->required()
-                        ->numeric(),
-                    Forms\Components\TextInput::make('city_id')
                         ->required()
-                        ->numeric(),
+                        ->relationship('city', 'name'),
                     Forms\Components\TextInput::make('zip_code')
                         ->required()
                         ->maxLength(255),
